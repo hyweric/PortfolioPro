@@ -1,24 +1,10 @@
-from flask import Flask, request, jsonify, render_template
-import math
+# In your main application file
+from flask import Flask, render_template
+from calculate_routes import calculate_bp
 
 app = Flask(__name__)
+app.register_blueprint(calculate_bp)
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
-
-@app.route('/calculate', methods=['POST'])
-def calculate():
-    x = float(request.form.get('x'))
-    y = float(request.form.get('y'))
-    len1 = float(request.form.get('len1'))
-    len2 = float(request.form.get('len2'))
-
-    kin1 = Kinematics()
-    result = kin1.inverseKinematics(x, y, len1, len2)
-
-    return jsonify(result)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

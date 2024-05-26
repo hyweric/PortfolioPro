@@ -1,0 +1,42 @@
+
+body {
+    background-color: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+#animation-canvas {
+    border: 1px solid #d3d3d3;
+}
+
+#result {
+    display: none;
+}
+
+#zoom-buttons {
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
+.zoom-button {
+    font-size: 20px;
+    margin: 0 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.light-blue {
+    background-color: lightblue;
+}
+
+.light-green {
+    background-color: lightgreen;
+}

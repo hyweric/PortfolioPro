@@ -68,9 +68,7 @@ if __name__ == "__main__":
     job = input("job: ")
     extracted_text = extract_text_from_pdf()
     # print(extracted_text)
-
-    print("Generating content...")
-    print(generate_content(f"""divide resume into 3 pieces into a personal website.
+    contextResume = f"""divide resume into 3 pieces into a personal website.
                            You will be provided a resume. Your reply should include an intro, education, job experiences, other experiences/ interests, and job ranting 
 
                             Example response:
@@ -120,4 +118,7 @@ if __name__ == "__main__":
 5/10
                           
                             label each section- intro (name, contact, website, description, location), education (school, major), job experiences (sections like above), other experience and interests, rating. all sections and subsections must be present but if any additional info is provided that is not related to any of the provided sections, do not include it. There should only be those sections. If some sections are not given, write Not Provided. Rating should always be given.  
-                            Do not include like "following this structure, here is the ___" any additional comments regarding the output. divide each header with a divider, each large section is heading 2, subsections are heading 3. give a final rating from 1-10 for the job of {job} and grade strictly like a professional recruiter (leave no additional comments though). make it into bullet points and easily readable, this response should be standard and exactly follow the provided format. make the response directly pastable (to be scraped by computer) so no additional comments""", extracted_text))
+                            Do not include like "following this structure, here is the ___" any additional comments regarding the output. divide each header with a divider, each large section is heading 2, subsections are heading 3. give a final rating from 1-10 for the job of {job} and grade strictly like a professional recruiter (leave no additional comments though). make it into bullet points and easily readable, this response should be standard and exactly follow the provided format. make the response directly pastable (to be scraped by computer) so no additional comments"""
+ 
+    print("Generating content...")
+    print(generate_content(contextResume, extracted_text))
