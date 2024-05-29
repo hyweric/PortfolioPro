@@ -51,8 +51,7 @@ def generate_content(context, inputPrompt):
     except:
         return "Unable to generate"
 
-# TEMPORARY
-job = "doctor"
+job = "Engineer"
 
 contextResume = f"""divide resume into 3 pieces into a personal website.
                            You will be provided a resume. Your reply should include an intro, education, job experiences, other experiences/ interests, and job ranting 

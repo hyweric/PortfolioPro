@@ -11,13 +11,13 @@
 
 <body>
     <div class="container py-3">
-        <div class="row">
-            <div class="col-lg-6">
+        <div class="row justify-content-center">
+            <div class="col-lg-10"> <!-- 10 refers to div width-->
                 <h1>Profile AI</h1>
-                <form id="parameter-form" class="mt-5">
+                <form id="parameter-form" class="mt-5" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="pgh">Paste Resume</label>
-                        <textarea id="pgh" class="form-control" name="pgh" required></textarea>
+                        <label for="resume">Upload Resume (PDF)</label>
+                        <input type="file" id="resume" class="form-control" name="resume" accept="application/pdf" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
@@ -36,6 +36,8 @@
         document.getElementById('parameter-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').innerHTML = 'Cooking...';
 
             fetch('/calculate', {
                 method: 'POST',
@@ -46,7 +48,7 @@
                     console.log(data);
                     const resultDiv = document.getElementById('result');
                     resultDiv.style.display = 'block';
-                    
+
                     let htmlContent = `<h3>Extracted Resume Information</h3>`;
                     htmlContent += `<p><strong>Name:</strong> ${data.name || 'Not Provided'}</p>`;
                     htmlContent += `<p><strong>Contact:</strong> ${data.contact || 'Not Provided'}</p>`;
@@ -58,7 +60,7 @@
                     htmlContent += `<p><strong>Year:</strong> ${data.year || 'Not Provided'}</p>`;
                     htmlContent += `<p><strong>Major:</strong> ${data.major || 'Not Provided'}</p>`;
                     htmlContent += `<h4>Job Experiences</h4>`;
-                    
+
                     if (data.jobNames && data.jobNames.length > 0) {
                         data.jobNames.forEach((job, index) => {
                             htmlContent += `<p><strong>Job ${index + 1}:</strong> ${job}</p>`;
@@ -67,7 +69,8 @@
                     } else {
                         htmlContent += `<p>Not Provided</p>`;
                     }
-
+                    
+                    // Note: Still need to fix I'm just seperating by "- " for now but doesn't always work
                     htmlContent += `<h4>Other Experience and Interests</h4>`;
                     if (data.otherExperience && data.otherExperience.length > 0) {
                         data.otherExperience.forEach((exp, index) => {
@@ -77,8 +80,8 @@
                         htmlContent += `<p>Not Provided</p>`;
                     }
 
-                    htmlContent += `<h4>Rating for Job</h4>`;
-                    htmlContent += `<p>${data.rating || 'Not Provided'}</p>`;
+                    htmlContent += `<h4>Rating for Job of ${data.rating[0]}</h4>`;
+                    htmlContent += `<p>${data.rating[1] || 'Not Provided'}</p>`;
 
                     resultDiv.innerHTML = htmlContent;
                 })

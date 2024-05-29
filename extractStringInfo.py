@@ -18,8 +18,6 @@ def getSingularPattern(pattern, resumeinfo):
         return result[0] if result else None
     except:
         return "ASDLFJAOWEHBASJEWNEWJEANS"
-def extractResumeInfo(resumeinfo):
-    print("THIS IS THE INPUT Resume Info: ", resumeinfo)
 
 def extractResumeInfo(resumeinfo):
     resumeExtract = {
@@ -38,7 +36,7 @@ def extractResumeInfo(resumeinfo):
         # Other Experience and Interests
         "otherExperience": [],
         # Rating for Job
-        "rating": r"## Rating for Job of (.*?)\n\n(.*?)(?=$|/10)"
+        "rating": []
 
     }
     print("Resume Info: ", resumeinfo)
@@ -69,16 +67,24 @@ def extractResumeInfo(resumeinfo):
     # Add other experience
     other_pattern = re.compile(r"## Other Experience and Interests\n\n(.*?)(?=(---|Rating))", re.DOTALL) 
     other_experience = other_pattern.findall(resumeinfo)
+    exps = []
     if other_experience: 
         for experience in other_experience[0]:
-            resumeExtract["otherExperience"].append(experience)
-            print("Other Experience: ", experience)
-
-    # Add rating 
-    rating_pattern = re.compile(r"## Rating for Job of (.*?)\n\n(.*?)(?=$)", re.DOTALL)
-    rating = rating_pattern.findall(resumeinfo)
-    rating_jobName, rating_content = rating[0]
-    print("Rating Job Name: ", rating_jobName)
-    print("Rating Content: ", rating_content)
+            if experience != '---' and experience != 'Rating':
+                experiences = experience.split('– ')
+                for exp in experiences:
+                    resumeExtract["otherExperience"].append(exp.strip())
+                    print("Other Experience: ", exp.strip()) 
     
-    return resumeExtract
+    rating_pattern = re.compile(r"## Rating for Job of (.*?)\n\n(.*?)(?=$)", re.DOTALL)
+    ratings = rating_pattern.findall(resumeinfo)
+    if ratings:  # check if rating is not empty
+        rating_jobName, rating_content = ratings[0]
+    else:
+        rating_jobName, rating_content = None, None  # if rating is empty, set rating_jobName and rating_content to None
+    print("Rating Job Name: ", rating_jobName)
+    print("Rating Content: ", rating_content)  
+    resumeExtract["rating"].append(rating_jobName)
+    resumeExtract["rating"].append(rating_content)
+
+    return resumeExtract 
