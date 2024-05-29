@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>profile ai</title>
+    <title>Profile AI</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -13,7 +13,7 @@
     <div class="container py-3">
         <div class="row">
             <div class="col-lg-6">
-                <h1>profile ai</h1>
+                <h1>Profile AI</h1>
                 <form id="parameter-form" class="mt-5">
                     <div class="form-group">
                         <label for="pgh">Paste Resume</label>
@@ -21,14 +21,14 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
-                <div id="result" class="alert alert-info mt-3">
-                    <!-- angle results or error message will be displayed here -->
+                <div id="result" class="alert alert-info mt-3" style="display:none;">
+                    <!-- Extracted resume information will be displayed here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- jquery bootstrap bundle-->
+    <!-- jQuery and Bootstrap Bundle -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
@@ -37,18 +37,56 @@
             e.preventDefault();
             const formData = new FormData(this);
 
-            // fetch('/calculate', {
-            fetch('http://127.0.0.1:5000/calculate', {
+            fetch('/calculate', {
                 method: 'POST',
                 body: formData,
             })
-                .then(response => {
-                    console.log(response.json());
-                    const ppinput = formData.get('pgh'); // paragraph input
-                    const name = result.name;
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
                     const resultDiv = document.getElementById('result');
-                    resultDiv.innerHTML = `Name: ${name} <br> Contact: ${contact}`;
                     resultDiv.style.display = 'block';
+                    
+                    let htmlContent = `<h3>Extracted Resume Information</h3>`;
+                    htmlContent += `<p><strong>Name:</strong> ${data.name || 'Not Provided'}</p>`;
+                    htmlContent += `<p><strong>Contact:</strong> ${data.contact || 'Not Provided'}</p>`;
+                    htmlContent += `<p><strong>Website:</strong> ${data.website || 'Not Provided'}</p>`;
+                    htmlContent += `<p><strong>Description:</strong> ${data.description || 'Not Provided'}</p>`;
+                    htmlContent += `<p><strong>Location:</strong> ${data.location || 'Not Provided'}</p>`;
+                    htmlContent += `<h4>Education</h4>`;
+                    htmlContent += `<p><strong>School:</strong> ${data.school || 'Not Provided'}</p>`;
+                    htmlContent += `<p><strong>Year:</strong> ${data.year || 'Not Provided'}</p>`;
+                    htmlContent += `<p><strong>Major:</strong> ${data.major || 'Not Provided'}</p>`;
+                    htmlContent += `<h4>Job Experiences</h4>`;
+                    
+                    if (data.jobNames && data.jobNames.length > 0) {
+                        data.jobNames.forEach((job, index) => {
+                            htmlContent += `<p><strong>Job ${index + 1}:</strong> ${job}</p>`;
+                            htmlContent += `<p><strong>Details:</strong> ${data.jobContent[index]}</p>`;
+                        });
+                    } else {
+                        htmlContent += `<p>Not Provided</p>`;
+                    }
+
+                    htmlContent += `<h4>Other Experience and Interests</h4>`;
+                    if (data.otherExperience && data.otherExperience.length > 0) {
+                        data.otherExperience.forEach((exp, index) => {
+                            htmlContent += `<p><strong>Experience ${index + 1}:</strong> ${exp}</p>`;
+                        });
+                    } else {
+                        htmlContent += `<p>Not Provided</p>`;
+                    }
+
+                    htmlContent += `<h4>Rating for Job</h4>`;
+                    htmlContent += `<p>${data.rating || 'Not Provided'}</p>`;
+
+                    resultDiv.innerHTML = htmlContent;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.style.display = 'block';
+                    resultDiv.innerHTML = `<p class="text-danger">An error occurred. Please try again.</p>`;
                 });
         });
     </script>
