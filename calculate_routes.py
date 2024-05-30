@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import fitz 
 from flask import Flask, request, jsonify, render_template, Blueprint
 import os
 from shared import generate_resume_dict

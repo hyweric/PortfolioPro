@@ -8,5 +8,5 @@ app.register_blueprint(calculate_bp)
 def home():
     return render_template('index.html')
 
-# for wsgi
-application = app
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -36,7 +36,11 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
                         }
                         jobDiv.appendChild(jobDetails);
                         jobDiv.addEventListener('click', () => {
-                            jobDetails.style.display = jobDetails.style.display === 'none' ? 'block' : 'none';  
+                            if (jobDetails.style.display === 'none') {
+                                jobDetails.style.display = 'block';
+                            } else {
+                                jobDetails.style.display = 'none';
+                            }
                         });
                         jobExperiences.appendChild(jobDiv);
                     });
@@ -70,5 +74,6 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
     // });
 
     document.getElementById('export-html').addEventListener('click', function () {
+        alert('im working on this still just save for now')
         // i gotta rework this 
     });
