@@ -23,7 +23,7 @@ def extractResumeInfo(resumeinfo):
     resumeExtract = {
         "name": r"NAME: (.*)",
         "contact": r"CONTACT: (.*)",
-        "website": r"WEBSITE: \[(.*)\]\((.*)\)",
+        "website": r"WEBSITE: (.*)",
         "description": r"DESCRIPTION: (.*)",
         "location": r"LOCATION: (.*)",
         # Education 
@@ -54,7 +54,6 @@ def extractResumeInfo(resumeinfo):
     jobs = job_pattern.findall(resumeinfo) # jobs in tuples 
     job_data = [] 
     for job in jobs:    
-
         job_title, job_content = job[0].split('\n', 1)
         print("Job Title: ", job_title)
         print("Job Content: ", job_content)
@@ -67,14 +66,16 @@ def extractResumeInfo(resumeinfo):
     # Add other experience
     other_pattern = re.compile(r"## Other Experience and Interests\n\n(.*?)(?=(---|Rating))", re.DOTALL) 
     other_experience = other_pattern.findall(resumeinfo)
-    exps = []
+
     if other_experience: 
-        for experience in other_experience[0]:
-            if experience != '---' and experience != 'Rating':
-                experiences = experience.split('– ')
-                for exp in experiences:
-                    resumeExtract["otherExperience"].append(exp.strip())
-                    print("Other Experience: ", exp.strip()) 
+        experiences = other_experience[0][0].split('\n- ')
+        for exp in experiences:
+            if exp:  
+                field_name, field_value = exp.split(': ', 1)
+                field_name = field_name.replace('**', '').strip()
+                field_value = ', '.join([v.strip() for v in field_value.split(' - ')])
+                resumeExtract["otherExperience"].append({field_name: field_value})
+                print(f"{field_name}: {field_value}") 
     
     rating_pattern = re.compile(r"## Rating for Job of (.*?)\n\n(.*?)(?=$)", re.DOTALL)
     ratings = rating_pattern.findall(resumeinfo)

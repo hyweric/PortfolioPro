@@ -61,7 +61,7 @@ contextResume = f"""divide resume into 3 pieces into a personal website.
 
 - NAME: Rishab Kumar Jain
 - CONTACT: 123 456 7890 
-- WEBSITE: [www.linkedin.com/in/rishab-jain-k](http://www.linkedin.com/in/rishab-jain-k)
+- WEBSITE: www.linkedin.com/in/rishab-jain-k 
 - DESCRIPTION: Building ICOR. Harvard '27, TIME's 25 Most Influential Teens (LinkedIn)
 - LOCATION: Cambridge, Massachusetts, United States
 

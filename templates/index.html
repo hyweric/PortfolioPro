@@ -7,22 +7,120 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+
+        h1 {
+        margin: 0.67em 0px;
+        font-size: 2em;
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+        }
+
+        header.hero h1 {
+            font-family: Montserrat, sans-serif;
+            font-size: 4.5em;
+            font-weight: 600;
+            line-height: 1.4em;
+        }
+
+        header.hero h1 span {
+            font-weight: 300;
+        }
+
+        body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #profile {
+            display: flex;
+            align-items: center;
+        }
+
+        #profile-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 80%;
+            margin-left: 20px;
+        }
+
+        #profile-info {
+            flex-grow: 1;
+        }
+
+        .job-experience {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .job-experience:hover {
+            background-color: #f1f1f1;
+        }
+
+        .job-details {
+            display: none;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            margin-top: 10px;
+        }
+
+        .btn-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container py-3">
         <div class="row justify-content-center">
-            <div class="col-lg-10"> <!-- 10 refers to div width-->
+            <div class="col-lg-10">
                 <h1>Profile AI</h1>
                 <form id="parameter-form" class="mt-5" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="profileImage">Upload Profile Image</label>
+                        <input type="file" id="profileImage" class="form-control" name="profileImage" accept="image/*" required>
+                    </div>
                     <div class="form-group">
                         <label for="resume">Upload Resume (PDF)</label>
                         <input type="file" id="resume" class="form-control" name="resume" accept="application/pdf" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
-                <div id="result" class="alert alert-info mt-3" style="display:none;">
-                    <!-- Extracted resume information will be displayed here -->
+                <div id="profile-section" class="mt-5" style="display: none;">
+                    <div id="profile" class="mb-4">
+                        <div id="profile-info">
+                            <h2 id="name"></h2>
+                            <p id="introduction" class="text-muted"></p>
+                            <h4 id="website"></h4>
+                        </div>
+                        <img id="profile-image" src="#" alt="Profile Image">
+                    </div>
+                    <h3><strong><u>Experiences</u></strong></h3>
+                    <div id="job-experiences"></div>
+                    <h3><strong><u>Other Activities Interests</u></strong></h3>
+                    <div id="other-experiences"></div>
+                </div>
+                <div class="btn-group btn-fixed">
+                    <button id="rate-job" class="btn btn-secondary">Rate for Job</button>
+                    <button id="export-html" class="btn btn-secondary">Export as HTML</button>
                 </div>
             </div>
         </div>
@@ -36,8 +134,7 @@
         document.getElementById('parameter-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('result').innerHTML = 'Cooking...';
+            document.getElementById('profile-section').style.display = 'none';
 
             fetch('/calculate', {
                 method: 'POST',
@@ -45,52 +142,65 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    const resultDiv = document.getElementById('result');
-                    resultDiv.style.display = 'block';
+                    document.getElementById('profile-section').style.display = 'block';
+                    document.getElementById('profile-image').src = URL.createObjectURL(document.getElementById('profileImage').files[0]);
+                    document.getElementById('name').innerText = `Hello, I am ${data.name || 'Not Provided'}`;
+                    document.getElementById('introduction').innerText = data.description || 'Not Provided';
+                    document.getElementById('website').innerText = `Other Links: ${data.website || 'Not Provided'}`;
 
-                    let htmlContent = `<h3>Extracted Resume Information</h3>`;
-                    htmlContent += `<p><strong>Name:</strong> ${data.name || 'Not Provided'}</p>`;
-                    htmlContent += `<p><strong>Contact:</strong> ${data.contact || 'Not Provided'}</p>`;
-                    htmlContent += `<p><strong>Website:</strong> ${data.website || 'Not Provided'}</p>`;
-                    htmlContent += `<p><strong>Description:</strong> ${data.description || 'Not Provided'}</p>`;
-                    htmlContent += `<p><strong>Location:</strong> ${data.location || 'Not Provided'}</p>`;
-                    htmlContent += `<h4>Education</h4>`;
-                    htmlContent += `<p><strong>School:</strong> ${data.school || 'Not Provided'}</p>`;
-                    htmlContent += `<p><strong>Year:</strong> ${data.year || 'Not Provided'}</p>`;
-                    htmlContent += `<p><strong>Major:</strong> ${data.major || 'Not Provided'}</p>`;
-                    htmlContent += `<h4>Job Experiences</h4>`;
-
+                    const jobExperiences = document.getElementById('job-experiences');
+                    jobExperiences.innerHTML = '';
                     if (data.jobNames && data.jobNames.length > 0) {
                         data.jobNames.forEach((job, index) => {
-                            htmlContent += `<p><strong>Job ${index + 1}:</strong> ${job}</p>`;
-                            htmlContent += `<p><strong>Details:</strong> ${data.jobContent[index]}</p>`;
+                            const jobDiv = document.createElement('div');
+                            jobDiv.classList.add('job-experience');
+                            jobDiv.innerHTML = `<h4>${job}</h4>`;
+                            const jobDetails = document.createElement('div');
+                            jobDetails.classList.add('job-details');
+                            jobDetails.style.display = 'none'; // Add this line
+                            if (data.jobContent && data.jobContent[index]) {
+                                jobDetails.innerHTML = `<p>${data.jobContent[index]}</p>`;
+                            } else {
+                                jobDetails.innerHTML = '<p>Not Provided</p>';
+                            }
+                            jobDiv.appendChild(jobDetails);
+                            jobDiv.addEventListener('click', () => {
+                                jobDetails.style.display = jobDetails.style.display === 'none' ? 'block' : 'none';
+                            });
+                            jobExperiences.appendChild(jobDiv);
                         });
                     } else {
-                        htmlContent += `<p>Not Provided</p>`;
+                        jobExperiences.innerHTML = '<p>Not Provided</p>';
                     }
-                    
-                    // Note: Still need to fix I'm just seperating by "- " for now but doesn't always work
-                    htmlContent += `<h4>Other Experience and Interests</h4>`;
+
+                    const otherExperiences = document.getElementById('other-experiences');
+                    otherExperiences.innerHTML = '';
                     if (data.otherExperience && data.otherExperience.length > 0) {
                         data.otherExperience.forEach((exp, index) => {
-                            htmlContent += `<p><strong>Experience ${index + 1}:</strong> ${exp}</p>`;
+                            const expDiv = document.createElement('div');
+                            let expContent = '';
+                            for (let key in exp) {
+                                expContent += `<strong>${key}:</strong> ${exp[key]}<br>`;
+                            }
+                            expDiv.innerHTML = `<p> <br>${expContent}</p>`;
+                            otherExperiences.appendChild(expDiv);
                         });
                     } else {
-                        htmlContent += `<p>Not Provided</p>`;
+                        otherExperiences.innerHTML = '<p>Not Provided</p>';
                     }
-
-                    htmlContent += `<h4>Rating for Job of ${data.rating[0]}</h4>`;
-                    htmlContent += `<p>${data.rating[1] || 'Not Provided'}</p>`;
-
-                    resultDiv.innerHTML = htmlContent;
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    const resultDiv = document.getElementById('result');
-                    resultDiv.style.display = 'block';
-                    resultDiv.innerHTML = `<p class="text-danger">An error occurred. Please try again.</p>`;
+                    alert('An error occurred. Please try again.');
                 });
+        });
+
+        document.getElementById('rate-job').addEventListener('click', function () {
+            alert('Rate for Job functionality coming soon!');
+        });
+
+        document.getElementById('export-html').addEventListener('click', function () {
+            alert('Export as HTML functionality coming soon!');
         });
     </script>
 </body>
