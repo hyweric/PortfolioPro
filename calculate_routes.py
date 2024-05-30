@@ -9,6 +9,7 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+# maybe implement more routes etc need to learn sql databases first 
 calculate_bp = Blueprint('calculate', __name__)
 @calculate_bp.route('/calculate', methods=['POST'])
 def calculate():
@@ -19,14 +20,14 @@ def calculate():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
-    if file and file.filename.endswith('.pdf'):
+    if file and file.filename.endswith('.pdf'): # just in case even though its taken care of by html input tag 
         resume_text = extract_text_from_pdf(file)
         response = generate_resume_dict(resume_text)
         return jsonify(response)
     else:
         return jsonify({'error': 'Invalid file type'}), 400
 
-def extract_text_from_pdf(pdf_file):
+def extract_text_from_pdf(pdf_file): # from SO
     doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
     text = ""
     for page in doc:

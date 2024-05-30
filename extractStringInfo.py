@@ -53,24 +53,27 @@ def extractResumeInfo(resumeinfo):
     job_pattern = re.compile(r"### (.*?)(?=(###|$|---|Other Experience))", re.DOTALL) # gets the ### up till another ### or end of string or --- or Other Experience
     jobs = job_pattern.findall(resumeinfo) # jobs in tuples 
     job_data = [] 
-    for job in jobs:    
-        job_title, job_content = job[0].split('\n', 1)
-        print("Job Title: ", job_title)
-        print("Job Content: ", job_content)
-        
-        job_data.append({"jobName": job_title.strip(), "jobContent": job_content.strip()})
-        # add to patterns
-        resumeExtract["jobNames"].append(job_title)
-        resumeExtract["jobContent"].append(job_content)
+    for job in jobs:
+        if '\n' in job[0]:    
+            job_title, job_content = job[0].split('\n', 1)
+            print("Job Title: ", job_title)
+            print("Job Content: ", job_content)
+            job_data.append({"jobName": job_title.strip(), "jobContent": job_content.strip().replace('\n', '')})
+            # add to patterns
+            resumeExtract["jobNames"].append(job_title)
+            resumeExtract["jobContent"].append(job_content)
+        else:
+            print(f"Unexpected format: {job[0]}")
     
     # Add other experience
-    other_pattern = re.compile(r"## Other Experience and Interests\n\n(.*?)(?=(---|Rating))", re.DOTALL) 
+    other_pattern = re.compile(r"## Other Experiences and Interests\n\n(.*?)(?=(---|Rating))", re.DOTALL) 
     other_experience = other_pattern.findall(resumeinfo)
 
     if other_experience: 
         experiences = other_experience[0][0].split('\n- ')
         for exp in experiences:
             if exp:  
+                exp = exp[2:] if exp.startswith('- ') else exp
                 field_name, field_value = exp.split(': ', 1)
                 field_name = field_name.replace('**', '').strip()
                 field_value = ', '.join([v.strip() for v in field_value.split(' - ')])

@@ -61,7 +61,7 @@ contextResume = f"""divide resume into 3 pieces into a personal website.
 
 - NAME: Rishab Kumar Jain
 - CONTACT: 123 456 7890 
-- WEBSITE: www.linkedin.com/in/rishab-jain-k 
+- WEBSITE: www.linkedin.com/in/rishab-jain-k  [ONE WEBSITE AT MOST, NO ADDITIONAL THINGS!]
 - DESCRIPTION: Building ICOR. Harvard '27, TIME's 25 Most Influential Teens (LinkedIn)
 - LOCATION: Cambridge, Massachusetts, United States
 
@@ -91,7 +91,7 @@ contextResume = f"""divide resume into 3 pieces into a personal website.
 - Designed the database tool, then presented it to the director of the Environmental Health Trust (client).
 
 ---
-## Other Experience and Interests
+## Other Experiences and Interests
 
 - **Top Skills**: Sustainability, Leadership, Chemistry
 - **Honors-Awards**: First Prize Winner - Winner's Recital, Crescendo International Music Competition at Carnegie Hall, Grand Award Winner in Chemistry at ISEF 2022 (Third Award of $1,000), Washington State Delegate at the 2023 AAAS/AJAS Conference, US Senate Youth Program (USSYP) State Delegate for WA State and Recipient of $10,000 Scholarship, Ronald Reagan Leadership Medal

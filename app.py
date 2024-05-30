@@ -1,4 +1,3 @@
-# In your main application file
 from flask import Flask, render_template
 from calculate_routes import calculate_bp
 
