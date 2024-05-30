@@ -7,3 +7,6 @@ app.register_blueprint(calculate_bp)
 @app.route('/')
 def home():
     return render_template('index.html')
+
+# for wsgi
+application = app
