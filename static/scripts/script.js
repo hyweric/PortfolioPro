@@ -16,9 +16,8 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
         document.getElementById('name').innerText = `Hello, I am ${data.name || 'Not Provided'}`; 
         document.getElementById('introduction').innerText = data.description || 'Not Provided';
         // need to fix link 
-        const websiteLink = document.getElementById('website');
-        websiteLink.innerText = `${data.website || 'Not Provided'}`;
-        websiteLink.href = data.website || '#';
+        const contactInfo = document.getElementById('contact');
+        contactInfo.innerText = `${data.contactInfo || data.website ||  'Contact Not Provided'}`;
 
         const jobExperiences = document.getElementById('job-experiences');
         jobExperiences.innerHTML = '';
