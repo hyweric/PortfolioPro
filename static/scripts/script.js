@@ -2,13 +2,14 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
     e.preventDefault();
     const formData = new FormData(this);
     document.getElementById('profile-section').style.display = 'none';
-
+    document.getElementById('status').textContent = 'Generating...   May take up to 30 seconds';
     fetch('/calculate', {
         method: 'POST',
         body: formData,
     })
     .then(response => response.json())
     .then(data => {
+        document.getElementById('status').textContent = 'Generated.';
         document.getElementById('profile-section').style.display = 'block';
         document.getElementById('profile-image').src = URL.createObjectURL(document.getElementById('profileImage').files[0]);
         // probably change to a better introduction 
@@ -16,7 +17,7 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
         document.getElementById('introduction').innerText = data.description || 'Not Provided';
         // need to fix link 
         const websiteLink = document.getElementById('website');
-        websiteLink.innerText = `Other Links: ${data.website || 'Not Provided'}`;
+        websiteLink.innerText = `${data.website || 'Not Provided'}`;
         websiteLink.href = data.website || '#';
 
         const jobExperiences = document.getElementById('job-experiences');

@@ -11,40 +11,48 @@
 <body>
     <div class="container py-3">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <h1>Website Generator</h1>
-                <form id="parameter-form" class="mt-5" enctype="multipart/form-data">
+            <div id = "questions" class = "col-lg">
+                <h1>Portfolio Pro</h1>
+                <h2> Create a Custom Website from a Resume </h2>
+                <div class="divider"></div>
+                <form id="parameter-form" class="mt-2" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="form-group">
                             <label for="profileImage"><strong>STEP 1: </strong> Upload Profile Image</label>
                             <input type="file" id="profileImage" class="form-control" name="profileImage" accept="image/*" required>
                         </div>
                         <div class="form-group">
-                            <label for="resume"><strong>STEP 2: </strong> Upload Resume (PDF)</label></div>
+                            <label for="resume"><strong>STEP 2: </strong> Upload Resume (PDF)</label>
+                        </div>
                         <input type="file" id="resume" class="form-control" name="resume" accept="application/pdf" required>
                     </div>
                     <button type="submit" class="button-6">Create</button>
                 </form>
-                <div id="profile-section" class="mt-5" style="display: none;">
-                    <div id="profile" class="mb-4">
-                        <div id="profile-info">
-                            <h2 id="name"></h2>
-                            <p id="introduction" class="text-muted"></p>
-                            <p id="website"></p>
-                        </div>
-                        <img id="profile-image" src="#" alt="Profile Image">
+                <p id="status"></p>
+            </div>
+            <div id="profileFull">
+            <div id="profile-section" style = 'display: none;'>
+                <div id="profile" class="mb-4">
+                    <div id="profile-info">
+                        <h1 id="name"></h1>
+                        <p id="introduction" class="text-muted"></p>
+                        <p id="website"></p>
                     </div>
-                    <h3><strong>Experiences</strong></h3>
-                    <div class="divider"></div>
-                    <div id="job-experiences"></div>
-                    <h3><strong>Other:</strong></h3>
-                    <div class="divider"></div>
-                    <div id="other-experiences"></div>  
+                    <img id="profile-image" src="#" alt="Profile Image">
                 </div>
-                <div class="btn-group btn-fixed">
-                    <!-- <button id="rate-job" class="btn btn-secondary">Rate for Job</button> -->
-                    <button id="export-html" class="btn btn-secondary">Export as HTML</button> 
-                </div>
+                <h3><strong>Experiences</strong></h3>
+                <div class="divider"></div>
+                <div id="job-experiences"></div>
+                <h3><strong>Other:</strong></h3>
+                <div class="divider"></div>
+                <div id="other-experiences"></div>  
+            </div>
+        </div>
+        </div>
+            <div class="btn-group btn-fixed">
+                <!-- <button id="rate-job" class="btn btn-secondary">Rate for Job</button> -->
+                <button id="export-html" class="button-6">Export as HTML</button> 
+                <button id="export-to-website" class="button-6"> Export to Website</button>
             </div>
         </div>
     </div>

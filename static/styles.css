@@ -1,13 +1,24 @@
 /* CSS for main page mostly referenced from existing websites getCSScan for now since just a proof of concept*/
 h1 {
-    margin: 0.3em 0px;
     font-size: 2em;
     font-family: inherit;
     font-weight: 500;
-    line-height: 1.1;
     color: inherit;
 }
 
+h2 {
+    font-size: 1.5em;
+    font-family: inherit;
+    font-weight: 500;
+    color: gray;
+}
+
+.disclaimer {
+    font-size: 1em;
+    color: #666;
+    margin-top: 10px;
+    display: none;
+}
 /* from getCSScan */
 .button-6 {
   align-items: center;
@@ -35,6 +46,7 @@ h1 {
   touch-action: manipulation;
   vertical-align: baseline;
   width: auto;
+  margin-left: 10px;
 }
 
 .button-6:hover,
@@ -78,14 +90,26 @@ background-color: #f4f4f4;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #000000;
 }
 
 #profile {
-    background-color: rgb(255, 255, 163);
+    background-image: linear-gradient(to bottom, rgb(255, 182, 246), rgb(255, 203, 203));
     border: 2px solid black;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+#profile-inputs {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: transparent;
+    box-shadow: none;
     display: flex;
     align-items: center;
 }
@@ -96,13 +120,18 @@ background-color: #f4f4f4;
     object-fit: cover;
     border-radius: 80%;
     margin-left: 15px;
-    border: 2px solid black;
+    border: 4px solid rgb(255, 255, 255);
 }
 
 #profile-info {
     flex-grow: 1;
 }
 
+#profileFull{
+    padding: 15px;
+    margin: 15px;
+    border-radius: 10px;
+}
 .job-experience { 
     border: 1px solid #ddd;
     border-radius: 8px;
