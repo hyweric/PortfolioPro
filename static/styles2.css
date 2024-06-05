@@ -1,0 +1,64 @@
+/* header w/ black and green theme */
+#profile-section {
+    background-color: black;
+    color: rgb(127, 240, 127);
+    padding: 20px;
+    text-align: center;
+}
+
+#profile-image {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+#name {
+    font-size: 2em;
+    margin-top: 10px;
+}
+
+#introduction {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* experiences with light purple and black theme */
+#content-section {
+    background-color: rgb(232, 127, 240);
+    color: black;
+    padding: 20px;
+}
+
+.column {
+    width: 50%;
+    float: left;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.job-experience {
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.job-experience h4 {
+    cursor: pointer;
+    margin: 0;
+}
+
+.job-details {
+    display: none;
+}
+
+.other-experience {
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

@@ -93,9 +93,9 @@ contextResume = f"""divide resume into 3 pieces into a personal website.
 ---
 ## Other Experiences and Interests
 
-- **Top Skills**: Sustainability, Leadership, Chemistry
+- **Top Skills** [follow colon format exactly, no additional lines]: Sustainability, Leadership, Chemistry
 - **Honors-Awards**: First Prize Winner - Winner's Recital, Crescendo International Music Competition at Carnegie Hall, Grand Award Winner in Chemistry at ISEF 2022 (Third Award of $1,000), Washington State Delegate at the 2023 AAAS/AJAS Conference, US Senate Youth Program (USSYP) State Delegate for WA State and Recipient of $10,000 Scholarship, Ronald Reagan Leadership Medal
-- **THESE HEADERS CAN VARY**: X-ray Crystallography: Seeding Technique with Cytochrome P450 Reductase, The Innate Role of a Purposeful Life in Civilization, Structural Similarities and Overlapping Activities among Dihydroflavonol 4-Reductase, Flavanone 4-Reductase, and Anthocyanidin Reductase Offer Metabolic Flexibility in the Flavonoid Pathway, Investigating the Correlation between the Blood Type and the Rate of Infection by SARS-CoV-2
+- **THESE HEADERS CAN VARY [follow colon format exactly]**: X-ray Crystallography: Seeding Technique with Cytochrome P450 Reductase, The Innate Role of a Purposeful Life in Civilization, Structural Similarities and Overlapping Activities among Dihydroflavonol 4-Reductase, Flavanone 4-Reductase, and Anthocyanidin Reductase Offer Metabolic Flexibility in the Flavonoid Pathway, Investigating the Correlation between the Blood Type and the Rate of Infection by SARS-CoV-2
 
 ---                                
 ## Rating for Job of ________

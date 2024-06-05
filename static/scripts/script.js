@@ -1,3 +1,7 @@
+import FileSaver from 'https://cdn.skypack.dev/file-saver';
+import JSZip from 'https://cdn.skypack.dev/jszip';
+import TemplateGenerator from '../templates.js';
+
 document.getElementById('parameter-form').addEventListener('submit', function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -9,59 +13,14 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('status').textContent = 'Generated.';
-        document.getElementById('profile-section').style.display = 'block';
-        document.getElementById('profile-image').src = URL.createObjectURL(document.getElementById('profileImage').files[0]);
-        // probably change to a better introduction 
-        document.getElementById('name').innerText = `Hello, I am ${data.name || 'Not Provided'}`; 
-        document.getElementById('introduction').innerText = data.description || 'Not Provided';
-        // need to fix link 
-        const contactInfo = document.getElementById('contact');
-        contactInfo.innerText = `${data.contactInfo || data.website ||  'Contact Not Provided'}`;
+        document.getElementById('questions').style.display = 'none';
+        let templateSelect = document.getElementById('templateSelect').value;
+        let tg = new TemplateGenerator(data);
 
-        const jobExperiences = document.getElementById('job-experiences');
-        jobExperiences.innerHTML = '';
-        if (data.jobNames && data.jobNames.length > 0) {
-            data.jobNames.forEach((job, index) => {
-                const jobDiv = document.createElement('div');
-                jobDiv.classList.add('job-experience');
-                jobDiv.innerHTML = `<h4>${job}</h4>`;
-                const jobDetails = document.createElement('div');
-                jobDetails.classList.add('job-details');
-                jobDetails.style.display = 'none'; //prevents 2 clicks problem 
-                if (data.jobContent && data.jobContent[index]) {
-                    jobDetails.innerHTML = `<p>${data.jobContent[index]}</p>`;
-                } else {
-                    jobDetails.innerHTML = '<p>Not Provided</p>';
-                }
-                jobDiv.appendChild(jobDetails);
-                jobDiv.addEventListener('click', () => {
-                    if (jobDetails.style.display === 'none') {
-                        jobDetails.style.display = 'block';
-                    } else {
-                        jobDetails.style.display = 'none';
-                    }
-                });
-                jobExperiences.appendChild(jobDiv);
-            });
-        } else {
-            jobExperiences.innerHTML = '<p>Not Provided</p>';
-        }
-
-        const otherExperiences = document.getElementById('other-experiences');
-        otherExperiences.innerHTML = '';
-        if (data.otherExperience && data.otherExperience.length > 0) {
-            data.otherExperience.forEach((exp, index) => {
-                const expDiv = document.createElement('div');
-                let expContent = '';
-                for (let key in exp) {
-                    expContent += `<strong>${key}:</strong> ${exp[key]}<br>`;
-                }
-                expDiv.innerHTML = `<p>${expContent}</p>`;
-                otherExperiences.appendChild(expDiv);
-            });
-        } else {
-            otherExperiences.innerHTML = '<p>Not Provided</p>';
+        if (templateSelect === 'templateOne') {
+            tg.generateTemplateOne();
+        } else if (templateSelect === 'templateTwo') {
+            tg.generateTemplateTwo();
         }
     })
     .catch(error => {
@@ -76,56 +35,31 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
 document.getElementById('export-html').addEventListener('click', function () {
     exportToHTML();
 });
-
 function exportToHTML() {
-    const formData = new FormData();
-    formData.append('resume', document.getElementById('resume').files[0]);
+    const zip = new JSZip();
+    const htmlContent = document.documentElement.outerHTML;
+    const cssLink = document.getElementById('main-stylesheet').getAttribute('href');
+    const selectedTemplate = document.getElementById('templateSelect').value;
 
-    fetch('/calculate', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        const htmlContent = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <title>Profile AI</title>
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-                <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-                <style>
-                    body { font-family: 'Montserrat', sans-serif; }
-                    .container { padding-top: 20px; }
-                    .divider { border-top: 1px solid #ddd; margin: 20px 0; }
-                    .job-details { display: block; }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <h2 id="name">Hello, I am ${data.name || 'Not Provided'}</h2>
-                    <p id="introduction">${data.description || 'Not Provided'}</p>
-                    <p><a id="website" href="${data.website || '#'}">Other Links: ${data.website || 'Not Provided'}</a></p>
-                    <div class="divider"></div>
-                    <h3>Experiences</h3>
-                    <div id="job-experiences">
-                        ${generateJobExperiences(data.jobNames, data.jobContent)}
-                    </div>
-                    <h3>Other Experiences and Interests</h3>
-                    <div id="other-experiences">
-                        ${generateOtherExperiences(data.otherExperience)}
-                    </div>
-                </div>
-            </body>
-            </html>
-        `;
-        
-        const blob = new Blob([htmlContent], { type: 'text/html' });
-        saveAs(blob, 'profile.html');
+    zip.file("index.html", htmlContent);
+
+    fetch(cssLink)
+    .then(response => response.text())
+    .then(cssContent => {
+        if (selectedTemplate === 'templateOne') {
+            zip.file("styles.css", cssContent);
+        } 
+        if (selectedTemplate === 'templateTwo'){
+            zip.file("styles2.css", cssContent);
+        }
+
+        zip.generateAsync({ type: "blob" })
+        .then(content => {
+            saveAs(content, "website.zip");
+        });
     })
     .catch(error => {
-        console.error('Error:', error);
+        console.error('Error fetching CSS:', error);
     });
 }
 
