@@ -55,8 +55,8 @@ class TemplateGenerator {
         document.getElementById('name').innerText = `Hello, I am ${this.data.name || 'Not Provided'}`; 
         document.getElementById('introduction').innerText = this.data.description || 'Not Provided';
         const contactInfo = document.getElementById('contact');
-        contactInfo.innerText = `${this.data.contactInfo || this.data.website ||  'Contact Not Provided'}`;
-
+        contactInfo.innerText = `${this.data.contactInfo || this.data.website || 'Contact Not Provided'}`;
+    
         const jobExperiences = document.getElementById('job-experiences');
         jobExperiences.innerHTML = '';
         if (this.data.jobNames && this.data.jobNames.length > 0) {
@@ -78,7 +78,7 @@ class TemplateGenerator {
         } else {
             jobExperiences.innerHTML = '<p>Not Provided</p>';
         }
-
+    
         const otherExperiences = document.getElementById('other-experiences');
         otherExperiences.innerHTML = '';
         if (this.data.otherExperience && this.data.otherExperience.length > 0) {
@@ -96,7 +96,7 @@ class TemplateGenerator {
             otherExperiences.innerHTML = '<p>Not Provided</p>';
         }
     }
-
+    
     createExperienceBlock(job, content) {
         const jobDiv = document.createElement('div');
         jobDiv.classList.add('job-experience');
@@ -119,6 +119,5 @@ class TemplateGenerator {
         });
         return jobDiv;
     }
-}
-
+}    
 export default TemplateGenerator;

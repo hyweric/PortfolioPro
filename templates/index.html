@@ -5,7 +5,7 @@
     <title>Portfolio Pro</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <link id="main-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">  <!-- separate file format for flask -->
+    <link rel="stylesheet" id="main-stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <script>
     var STATIC_URL = "{{ url_for('static', filename='') }}/";
@@ -19,21 +19,19 @@
                 <div class="divider"></div>
                 <form id="parameter-form" class="mt-2" enctype="multipart/form-data">
                     <div class="form-group">
-                        <div class="form-group">
-                            <label for="profileImage"><strong>STEP 1: </strong> Upload Profile Image</label>
-                            <input type="file" id="profileImage" class="form-control" name="profileImage" accept="image/*" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="resume"><strong>STEP 2: </strong> Upload Resume (PDF)</label>
-                            <input type="file" id="resume" class="form-control" name="resume" accept="application/pdf" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="templateSelect"><strong>STEP 3: </strong> Choose a Template</label>
-                            <select id="templateSelect" class="form-control" required>
-                                <option value="templateOne">Template One</option>
-                                <option value="templateTwo">Template Two</option>
-                            </select>
-                        </div>
+                        <label for="profileImage"><strong>STEP 1:</strong> Upload Profile Image</label>
+                        <input type="file" id="profileImage" class="form-control" name="profileImage" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume"><strong>STEP 2:</strong> Upload Resume (PDF)</label>
+                        <input type="file" id="resume" class="form-control" name="resume" accept="application/pdf" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="templateSelect"><strong>STEP 3:</strong> Select Template</label>
+                        <select id="templateSelect" class="form-control" name="templateSelect" required>
+                            <option value="templateOne">Template One</option>
+                            <option value="templateTwo">Template Two</option>
+                        </select>
                     </div>
                     <button type="submit" class="button-6">Create</button>
                 </form>
@@ -49,20 +47,18 @@
                         </div>
                         <img id="profile-image" src="#" alt="Profile Image">
                     </div>
-                    <div id="content-section">
-                        <h3><strong>Experiences</strong></h3>
-                        <div class="divider"></div>
-                        <div id="job-experiences" class="clearfix"></div>
-                        <h3><strong>Other:</strong></h3>
-                        <div class="divider"></div>
-                        <div id="other-experiences"></div>
-                    </div>
+                    <h3><strong>Experiences</strong></h3>
+                    <div class="divider"></div>
+                    <div id="job-experiences"></div>
+                    <h3><strong>Other:</strong></h3>
+                    <div class="divider"></div>
+                    <div id="other-experiences"></div>
                 </div>
             </div>
-        </div>
-        <div class="btn-group btn-fixed">
-            <button id="export-html" class="button-6">Export as HTML</button>
-            <button id="export-to-website" class="button-6">Export to Website</button>
+            <div class="btn-group btn-fixed">
+                <button id="export-html" class="button-6">Export as HTML</button>
+                <button id="export-to-website" class="button-6">Export to Website</button>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

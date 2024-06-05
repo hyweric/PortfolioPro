@@ -1,64 +1,84 @@
-/* header w/ black and green theme */
-#profile-section {
-    background-color: black;
-    color: rgb(127, 240, 127);
-    padding: 20px;
-    text-align: center;
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
-#profile-image {
+h1, h2, h3, h4 {
+    font-weight: 500;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+#profile-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#profile img {
     border-radius: 50%;
     width: 150px;
     height: 150px;
 }
 
-#name {
-    font-size: 2em;
-    margin-top: 10px;
-}
-
-#introduction {
-    font-size: 1.2em;
-    margin-top: 10px;
-}
-
-/* experiences with light purple and black theme */
-#content-section {
-    background-color: rgb(232, 127, 240);
-    color: black;
-    padding: 20px;
+#job-experiences, #other-experiences {
+    display: flex;
+    justify-content: space-between;
 }
 
 .column {
-    width: 50%;
-    float: left;
-    padding: 10px;
-    box-sizing: border-box;
+    width: 48%;
 }
 
-.job-experience {
-    border: 1px solid black;
-    margin-bottom: 10px;
+.job-experience, .other-experience {
+    background-color: #fafafa;
+    margin-bottom: 15px;
     padding: 10px;
+    border-radius: 5px;
+    transition: box-shadow 0.3s;
 }
 
-.job-experience h4 {
-    cursor: pointer;
-    margin: 0;
+.job-experience:hover, .other-experience:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .job-details {
     display: none;
+    padding-top: 10px;
 }
 
-.other-experience {
-    border: 1px solid black;
-    margin-bottom: 10px;
-    padding: 10px;
+.divider {
+    height: 2px;
+    background-color: #e0e0e0;
+    margin: 20px 0;
 }
 
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+.button-6 {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-6:hover {
+    background-color: #555;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
