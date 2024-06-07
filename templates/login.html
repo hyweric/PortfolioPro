@@ -6,5 +6,67 @@
 <body>
     <h1>login page</h1>
 </body>
+<!-- keep here for now since i like this format -->
+<script>
+    var STATIC_URL = "{{ url_for('static', filename='') }}/";
+</script>
+<body>
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div id="questions" class="col-lg">
+                <h1>Generate a Personal Website Using AI</h1>
+                <h2>Create a Custom Website Directly from Your Resume </h2>
+                <div class="divider"></div>
+                <form id="parameter-form" class="mt-2" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="profileImage"><strong>STEP 1:</strong> Upload Profile Image</label>
+                        <input type="file" id="profileImage" class="form-control" name="profileImage" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume"><strong>STEP 2:</strong> Upload Resume (PDF)</label>
+                        <input type="file" id="resume" class="form-control" name="resume" accept="application/pdf" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="templateSelect"><strong>STEP 3:</strong> Select Template</label>
+                        <select id="templateSelect" class="form-control" name="templateSelect" required>
+                            <option value="templateOne">Template One</option>
+                            <option value="templateTwo">Template Two</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="button-6">Create</button>
+                </form>
+                <p id="status"></p>
+            </div>
+            <div id="profileFull">
+                <div id="profile-section" style="display: none;">
+                    <div id="profile" class="mb-4">
+                        <div id="profile-info">
+                            <h1 id="name"></h1>
+                            <p id="introduction" class="text-muted"></p>
+                            <p id="contact"></p>
+                        </div>
+                        <img id="profile-image" src="#" alt="Profile Image">
+                    </div>
+                    <h3><strong>Experiences</strong></h3>
+                    <div class="divider"></div>
+                    <div id="job-experiences"></div>
+                    <h3><strong>Other:</strong></h3>
+                    <div class="divider"></div>
+                    <div id="other-experiences"></div>
+                </div>
+            </div>
+            <div class="btn-group btn-fixed">
+                <button id="export-html" class="button-6">Export as HTML</button>
+                <button id="export-to-website" class="button-6">Export to Website</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script type="module" src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='templates.js') }}"></script>
+</body>
 </html>
 {% endblock %}

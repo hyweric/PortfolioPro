@@ -1,4 +1,4 @@
-/* https://coolors.co/0f0f0f-fef9ff-ff686b-7776bc-0d1317 or https://coolors.co/0d1f2d-546a7b-9ea3b0-fae1df-e4c3ad*/
+/* https://coolors.co/0d1f2d-546a7b-9ea3b0-fae1df-e4c3ad*/ 
 h1 {
     font-size: 2rem;
     font-family: inherit;
@@ -22,9 +22,9 @@ h2 {
 /* from getCSScan */
 .button-6 {
   align-items: center;
-  background-color: #546A7B;
+  background-color: #000000;
   border: 0.0625rem solid rgba(0, 0, 0, 0.1);
-  border-radius: 0.25rem;
+  border-radius: 2rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 0.0625rem 0.1875rem 0;
   box-sizing: border-box;
   color: rgba(255, 255, 255);
@@ -52,7 +52,7 @@ h2 {
 .button-6:hover{
     color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.1) 0 0.25rem 0.75rem;
-}
+}   
 .button-6:focus {
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.1) 0 0.25rem 0.75rem;
@@ -64,7 +64,7 @@ h2 {
 }
 
 .button-6:active {
-  background-color:  #546A7B;
+  background-color:  #1e252a;
   color: rgba(255, 255, 255);
   transform: translateY(0);
 }
@@ -142,12 +142,12 @@ background-color: #f4f4f4;
     margin-top: 0.325rem;
   }
   
-  #main-title {
+#main-title {
     font-size: 2rem;
     font-family: inherit;
-    font-weight: 500;
     color: inherit;
-  }
+    font-weight: 1000; 
+}
   
 .navigation {
     font-size: 1.25rem;
@@ -171,7 +171,7 @@ background-color: #f4f4f4;
     transform: translateX(-50%);
     width: 0; 
     height: 2px;  
-    background-color: #EE4266;  
+    background-color: #FF3131;  
     transition: width 0.3s ease-in-out;  
 }
 

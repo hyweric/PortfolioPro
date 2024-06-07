@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - Portfolio Pro</title>
+    <title>{% block title %} {% endblock %} - PortfolioPro</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" id="main-stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -12,7 +12,7 @@
 </script>
 <body>
     <nav class="header-container">
-        <div id="main-title">Portfolio Pro</div>
+        <div id="main-title" style="color: black;">Portfolio<span style="color: #FF3131;">Pro</span></div>
         <div class="navigation">
             <a href="{{url_for('home')}}">Generate</a>
           <a href="{{url_for('login')}}">Login</a>
