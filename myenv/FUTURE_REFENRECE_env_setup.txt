@@ -1,0 +1,12 @@
+deactivate
+rm -rf venv
+python -m venv myenv
+
+# NOTE: this is for mac
+source myenv/bin/activate
+
+pip install flask pymupdf python-dotenv google-generativeai
+
+source myenv/bin/activate  
+export FLASK_APP=app.py
+flask run       
