@@ -2,3 +2,4 @@
 myenv/bin/
 myenv/lib/
 myenv/include/
+instance/database.db
