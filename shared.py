@@ -5,8 +5,9 @@ $ pip install google-generativeai
 """
 import google.generativeai as genai
 from extractStringInfo import extractResumeInfo
-
-genai.configure(api_key = "AIzaSyDy_l6-a7EjphUsVq2xJMyQ3pKmha25gWg")
+import os 
+key = os.environ.get('API_KEY')
+genai.configure(api_key = key)
 
 # Set up the model
 generation_config = {

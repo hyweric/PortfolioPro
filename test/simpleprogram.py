@@ -18,7 +18,7 @@ def extract_text_from_pdf():
 
 import google.generativeai as genai
 
-genai.configure(api_key = "AIzaSyDy_l6-a7EjphUsVq2xJMyQ3pKmha25gWg")
+genai.configure(api_key = "movedtoenv") 
 
 # Set up the model
 generation_config = {

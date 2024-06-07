@@ -5,7 +5,7 @@ python -m venv myenv
 # NOTE: this is for mac
 source myenv/bin/activate
 
-pip install flask pymupdf python-dotenv google-generativeai
+pip install flask pymupdf python-dotenv google-generativeai flask_sqlalchemy flask_login flask_bcrypt flask_wtf wtforms email_validator
 
 source myenv/bin/activate  
 export FLASK_APP=app.py
