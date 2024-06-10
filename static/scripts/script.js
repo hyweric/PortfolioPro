@@ -14,6 +14,7 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
     .then(response => response.json())
     .then(data => {
         document.getElementById('questions').style.display = 'none';
+        document.querySelector('.btn-group.btn-fixed').style.display = 'block';
         let templateSelect = document.getElementById('templateSelect').value;
         let tg = new TemplateGenerator(data);
 
@@ -32,36 +33,9 @@ document.getElementById('parameter-form').addEventListener('submit', function (e
     //     // smth about sending another call back to gemini somehow idk maybe later 
     // });
 
-document.getElementById('export-html').addEventListener('click', function () {
-    exportToHTML();
+document.getElementById('export-to-website').addEventListener('click', function () {
+    exportToWebsite();
 });
-function exportToHTML() {
-    const zip = new JSZip();
-    const htmlContent = document.documentElement.outerHTML;
-    const cssLink = document.getElementById('main-stylesheet').getAttribute('href');
-    const selectedTemplate = document.getElementById('templateSelect').value;
-
-    zip.file("index.html", htmlContent);
-
-    fetch(cssLink)
-    .then(response => response.text())
-    .then(cssContent => {
-        if (selectedTemplate === 'templateOne') {
-            zip.file("styles.css", cssContent);
-        } 
-        if (selectedTemplate === 'templateTwo'){
-            zip.file("styles2.css", cssContent);
-        }
-
-        zip.generateAsync({ type: "blob" })
-        .then(content => {
-            saveAs(content, "website.zip");
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching CSS:', error);
-    });
-}
 
 function generateJobExperiences(jobNames, jobContent) {
     if (!jobNames || jobNames.length === 0) {

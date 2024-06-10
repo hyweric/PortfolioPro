@@ -83,8 +83,8 @@ header.hero h1 span {
 }
 
 body {
-font-family: 'Montserrat', sans-serif;
-background-color: #f4f4f4;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f4f4;
 }
 .container {
     background-color: #fff;
@@ -134,7 +134,7 @@ background-color: #f4f4f4;
     border-radius: 0.625rem;
 }
 .header-container {
-    transform: translateX(5rem); /* recenter after navigation margins - TODO (maybe): find diff way to recenter */
+    transform: translateX(7rem); /* recenter after navigation margins - TODO (maybe): find diff way to recenter */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,6 +149,10 @@ background-color: #f4f4f4;
     font-weight: 1000; 
 }
   
+#login-questions {
+    text-align: center;
+}
+
 .navigation {
     font-size: 1.25rem;
     display: flex;
@@ -212,3 +216,20 @@ background-color: #f4f4f4;
     border: 1px solid #ddd;
     margin: 10px 0;
   }
+  
+.rounded-input {
+    border-radius: 1rem;
+    padding: 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+.login-container{
+    max-width: 500px;
+    margin: 0 auto; 
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+}

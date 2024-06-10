@@ -3,27 +3,29 @@
 <script>
     var STATIC_URL = "{{ url_for('static', filename='') }}/";
 </script>
-<script>
-    var STATIC_URL = "{{ url_for('static', filename='') }}/";
-</script>
 <body>
-    <div class="container py-3">
+    <div class="login-container py-3">
         <div class="row justify-content-center">
-            <div id="questions" class="col-lg">
-            <h1>Register page</h1>
-            <div class="divider"></div>
-            <form id="parameter-form" class="mt-2" enctype="multipart/form-data" method = "POST" action = "">
-                {{ form.hidden_tag() }}
-                {{ form.username }}
-                {{ form.password }}
-                {{ form.submit }}
-            </form>
-            <p>Already have an account <a href="{{ url_for('login') }}">Login here</a></p>
+            <div id="login-questions" class="col-lg">
+                <h1>Register for PortfolioPro</h1>
+                <div class="divider"></div>
+                <form id="parameter-form" class="mt-2" enctype="multipart/form-data" method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.username(class="form-control rounded-input") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password(class="form-control rounded-input") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.submit(class="button-6") }}
+                    </div>
+                </form>
+                <p>Already have an account? <a href="{{ url_for('register') }}">Sign In Here</a></p>
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
 {% endblock %}

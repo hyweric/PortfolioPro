@@ -2,7 +2,9 @@ class TemplateGenerator {
     constructor(data) {
         this.data = data;
     }
-
+    getGeneratedContent() {
+        return JSON.stringify(this.data);
+    }
     updateStylesheet(filename) {
         var oldLink = document.querySelector("#main-stylesheet");
         oldLink.href = STATIC_URL + filename;
