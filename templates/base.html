@@ -12,10 +12,11 @@
 </script>
 <body>
     <nav class="header-container">
-        <div id="main-title" style="color: black;">Portfolio<span style="color: #FF3131;">Pro</span></div>
+        <a id="main-title" href="{{url_for('home')}}">Portfolio<span style="color: #FF3131;">Pro</span></a>
         <div class="navigation">
             <a href="{{url_for('home')}}">Generate</a>
           <a href="{{url_for('login')}}">Login</a>
+          <a href="{{url_for('dashboard')}}">Dashboard</a>
           <!-- <a href="{{url_for('register')}}">Register</a> -->
         </div>
     </nav>

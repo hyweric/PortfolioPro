@@ -9,10 +9,13 @@
             <div id="questions" class="col-lg">
                 <h1>DASHBOARD</h1>
                 <a href="{{ url_for('logout') }}">Logout</a>
-            </div>
-            <div class="btn-group btn-fixed">
-                <!-- <button id="export-html" class="button-6">Export as HTML</button> -->
-                <button id="export-to-website" class="button-6">Use as Website</button>
+                <p>{{ current_user.username}}</p>
+                <div class="divider"></div>
+                <p>{{current_user.password}}</p>
+                <div class="divider"></div>
+                <p>{{current_user.id}}</p>
+                <div class="divider"></div>
+                <p>{{current_user.website_data}}</p>
             </div>
         </div>
     </div>
