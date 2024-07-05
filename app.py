@@ -10,10 +10,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import fitz
 import os 
 from shared import generate_resume_dict
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = 'secret'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
@@ -94,12 +95,46 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for('login'))
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    user = User.query.get(current_user.id)
+    if not user:
+        return redirect(url_for('login'))  
+
+    website_data = user.get_website_data()
+
+    if not website_data or 'content' not in website_data:
+        return render_template('dashboardTwo.html')  # Render a different template
+
+    content_dict = json.loads(website_data['content'])
+
+    #print(website_data)
+    #print("TESTING")
+    #print(content_dict)
+
+    return render_template('dashboard.html', website_data=website_data, content_dict=content_dict)
+
+calculate_bp = Blueprint('calculate', __name__)
+
+@calculate_bp.route('/download_resume', methods=['GET'])
+@login_required
+def download_resume():
     user = User.query.get(current_user.id)
     website_data = user.get_website_data()
-    return render_template('dashboard.html', website_data=website_data)
+    if not website_data or 'resume' not in website_data:
+        return jsonify({'error': 'Resume not found'}), 404
+    
+    resume_filename = website_data['resume']
+    return send_from_directory(app.config['upload folder'], resume_filename, as_attachment=True) # NEED TO CHANGE UPLOAD FOLDER TO WHEREVER THE RESUME FILE IS STORED IN THE SERVER
+
 
 @app.route('/export_to_website', methods=['POST'])
 @login_required
@@ -113,14 +148,18 @@ def export_to_website():
     return redirect(url_for('dashboard'))
 
 
-# @app.route('/<username>')
-# def user_website(username):
-#     user = User.query.filter_by(username=username).first()
-#     if user and user.website_data:
-#         return render_template('user_website.html', data=user.website_data)
-#     return redirect(url_for('dashboard'))
+@app.route('/<username>')
+@login_required
+def user_website(username):
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.website_data:
+        return redirect(url_for('login'))
+    website_data = user.get_website_data()
+    content_dict = json.loads(website_data['content'])
+    if user and user.website_data:
+        return render_template('user_website.html', website_data=user.website_data, content_dict=content_dict)
+    return redirect(url_for('login'))
 
-calculate_bp = Blueprint('calculate', __name__)
 
 @calculate_bp.route('/calculate', methods=['POST'])
 def calculate():

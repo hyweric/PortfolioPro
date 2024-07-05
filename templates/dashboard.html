@@ -1,4 +1,5 @@
-{% extends 'base.html' %}   
+{% extends 'base.html' %}
+
 {% block content %}
 <script>
     var STATIC_URL = "{{ url_for('static', filename='') }}/";
@@ -9,22 +10,73 @@
             <div id="questions" class="col-lg">
                 <h1>DASHBOARD</h1>
                 <a href="{{ url_for('logout') }}">Logout</a>
-                <p>{{ current_user.username}}</p>
+                <p>{{ current_user.username }}</p>
                 <div class="divider"></div>
-                <p>{{current_user.password}}</p>
+                <p>{{ current_user.password }}</p>
                 <div class="divider"></div>
-                <p>{{current_user.id}}</p>
+                <p>{{ current_user.id }}</p>
                 <div class="divider"></div>
-                <p>{{current_user.website_data}}</p>
+                <div id="website-data">
+                    <h2>Website:</h2>
+                    <p><strong>Resume:</strong> <a href="{{ url_for('calculate.download_resume', filename=current_user.website_data.resume) }}">Download Resume</a></p>
+                    {% if website_data %}
+                        <p><strong>Template Select:</strong> {{ website_data['templateSelect'] }}</p>
+                    {% else %}
+                        <p><strong>Template Select:</strong> Not Provided</p>
+                    {% endif %}
+                    {% if content_dict %}
+                        <p><strong>Location:</strong> {{ content_dict.location }}</p>
+                    {% else %}
+                        <p><strong>Location:</strong> Not Provided</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="profileFull">
+                <div id="profile-section">
+                    <div id="profile" class="mb-4">
+                        <div id="profile-info">
+                            {% if content_dict %}
+                                <h1 id="name">{{ content_dict.name }}</h1>
+                                <p id="introduction" class="text-muted">{{ content_dict.description }}</p>
+                                <p id="contact">{{ content_dict.contact }}</p>
+                            {% else %}
+                                <h1 id="name">Name Not Provided</h1>
+                                <p id="introduction" class="text-muted">Description Not Provided</p>
+                                <p id="contact">Contact Not Provided</p>
+                            {% endif %}
+                        </div>
+                        <img id="profile-image" src="{% if content_dict %}{{ STATIC_URL }}{{ content_dict.profileImage }}{% else %}{{ STATIC_URL }}placeholder.jpg{% endif %}">
+                    </div>
+                    <h3><strong>Experiences</strong></h3>
+                    <div class="divider"></div>
+                    <div id="job-experiences">
+                        {% if content_dict and content_dict.jobNames %}
+                            {% for job in content_dict.jobNames %}
+                                <p><strong>{{ job }}</strong>: {{ content_dict.jobContent[loop.index0] }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>No job experiences provided</p>
+                        {% endif %}
+                    </div>
+                    <h3><strong>Other:</strong></h3>
+                    <div class="divider"></div>
+                    <div id="other-experiences">
+                        {% if content_dict %}
+                            <p><strong>School:</strong> {{ content_dict.school }}</p>
+                            <p><strong>Major:</strong> {{ content_dict.major }}</p>
+                            <p><strong>Rating:</strong> {{ content_dict.rating }}</p>
+                            <p><strong>Location:</strong> {{ content_dict.location }}</p>
+                            <p><strong>Website:</strong> <a href="{{ content_dict.website }}">{{ content_dict.website }}</a></p>
+                            <p><strong>Year:</strong> {{ content_dict.year }}</p>
+                        {% else %}
+                            <p>No other experiences provided</p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-    <script type="module" src="{{ url_for('static', filename='scripts/script.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='templates.js') }}"></script>
 </body>
-</html>
 {% endblock %}

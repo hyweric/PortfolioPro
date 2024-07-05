@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    var STATIC_URL = "{{ url_for('static', filename='') }}/";
+</script>
+<body>
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div id="questions" class="col-lg">
+                <h1>{{ content_dict.name }}'s Website</h1>
+                <p>{{ current_user.username }}</p>
+                <div class="divider"></div>
+                <div id="website-data">
+                    <h2>Website:</h2>
+                    <p><strong>Resume:</strong> <a href="{{ url_for('calculate.download_resume', filename=current_user.website_data.resume) }}">Download Resume</a></p>
+                    <p><strong>Location:</strong> {{ content_dict.location }}</p>
+                </div>
+            </div>
+            <div id="profileFull">
+                <div id="profile-section">
+                    <div id="profile" class="mb-4">
+                        <div id="profile-info">
+                            <h1 id="name">{{ content_dict.name }}</h1>
+                            <p id="introduction" class="text-muted">{{ content_dict.description }}</p>
+                            <p id="contact">{{ content_dict.contact }}</p>
+                        </div>
+                        <img id="profile-image" src="{{ STATIC_URL }}{{ content_dict.profileImage }}">
+                    </div>
+                    <h3><strong>Experiences</strong></h3>
+                    <div class="divider"></div>
+                    <div id="job-experiences">
+                        {% for job in content_dict.jobNames %}
+                            <p><strong>{{ job }}</strong>: {{ content_dict.jobContent[loop.index0] }}</p>
+                        {% endfor %}
+                    </div>
+                    <h3><strong>Other:</strong></h3>
+                    <div class="divider"></div>
+                    <div id="other-experiences">
+                        <p><strong>School:</strong> {{ content_dict.school }}</p>
+                        <p><strong>Major:</strong> {{ content_dict.major }}</p>
+                        <p><strong>Rating:</strong> {{ content_dict.rating }}</p>
+                        <p><strong>Location:</strong> {{ content_dict.location }}</p>
+                        <p><strong>Website:</strong> <a href="{{ content_dict.website }}">{{ content_dict.website }}</a></p>
+                        <p><strong>Year:</strong> {{ content_dict.year }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}
