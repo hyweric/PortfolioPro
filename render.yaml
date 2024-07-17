@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: my-app
-    env: python
-    plan: free
-    buildCommand: ""
-    startCommand: gunicorn app:app
-    runtime: python-3.10

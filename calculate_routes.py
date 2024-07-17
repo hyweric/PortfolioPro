@@ -9,7 +9,6 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-# maybe implement more routes etc need to learn sql databases first 
 calculate_bp = Blueprint('calculate', __name__)
 @calculate_bp.route('/calculate', methods=['POST'])
 def calculate():
